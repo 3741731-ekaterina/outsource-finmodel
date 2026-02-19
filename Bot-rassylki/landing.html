@@ -1,0 +1,1106 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Финансовая модель аутсорса персонала — бесплатный шаблон</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --primary: #0f4c81;
+      --accent:  #059669;
+      --text:    #0f172a;
+      --muted:   #475569;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background: linear-gradient(160deg, #f0f9ff 0%, #ecfdf8 55%, #f8faff 100%);
+      min-height: 100vh;
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* ── Decorative blobs ── */
+    .blob {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(90px);
+      opacity: 0.11;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .blob-1 { width: 520px; height: 520px; background: #0ea5e9; top: -220px; right: -180px; }
+    .blob-2 { width: 420px; height: 420px; background: #10b981; bottom: 5%;  left: -160px; }
+
+    .container {
+      max-width: 940px;
+      margin: 0 auto;
+      padding: 0 20px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ══════════════════════════════
+       HERO
+    ══════════════════════════════ */
+    .hero {
+      padding: 72px 0 56px;
+      text-align: center;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(5, 150, 105, 0.1);
+      color: #065f46;
+      border: 1px solid rgba(5, 150, 105, 0.22);
+      font-size: 13px;
+      font-weight: 600;
+      padding: 7px 18px;
+      border-radius: 100px;
+      margin-bottom: 30px;
+      letter-spacing: 0.2px;
+    }
+    .badge-dot {
+      width: 8px; height: 8px;
+      background: var(--accent);
+      border-radius: 50%;
+      animation: blink 2.2s ease-in-out infinite;
+    }
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: 0.25; }
+    }
+
+    .hero h1 {
+      font-size: clamp(30px, 5.5vw, 56px);
+      font-weight: 800;
+      line-height: 1.13;
+      margin-bottom: 22px;
+      background: linear-gradient(135deg, #0f4c81 30%, #059669 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-desc {
+      font-size: clamp(15px, 2.2vw, 17.5px);
+      color: var(--muted);
+      max-width: 660px;
+      margin: 0 auto;
+      line-height: 1.75;
+    }
+    .hero-desc strong { color: var(--text); font-weight: 600; }
+
+    /* ══════════════════════════════
+       BENEFITS
+    ══════════════════════════════ */
+    .benefits { padding: 64px 0 52px; }
+
+    .section-label {
+      text-align: center;
+      font-size: 11.5px;
+      font-weight: 700;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 10px;
+    }
+    .section-title {
+      text-align: center;
+      font-size: clamp(22px, 3.5vw, 32px);
+      font-weight: 800;
+      color: var(--text);
+      margin-bottom: 44px;
+      line-height: 1.3;
+    }
+
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+
+    .card {
+      background: #ffffff;
+      border-radius: 20px;
+      padding: 28px 24px;
+      box-shadow: 0 2px 18px rgba(15,76,129,0.07), 0 1px 4px rgba(0,0,0,0.04);
+      border: 1px solid rgba(226,232,240,0.8);
+      opacity: 0;
+      transform: translateY(22px);
+      transition: opacity 0.55s ease, transform 0.55s ease, box-shadow 0.25s ease;
+    }
+    .card.visible { opacity: 1; transform: translateY(0); }
+    .card.visible:hover {
+      box-shadow: 0 10px 40px rgba(15,76,129,0.14);
+      transform: translateY(-5px);
+    }
+
+    .card-icon {
+      width: 52px; height: 52px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 18px;
+    }
+    .ic-blue   { background: linear-gradient(135deg,#dbeafe,#bfdbfe); }
+    .ic-green  { background: linear-gradient(135deg,#d1fae5,#a7f3d0); }
+    .ic-purple { background: linear-gradient(135deg,#ede9fe,#ddd6fe); }
+    .ic-amber  { background: linear-gradient(135deg,#fef3c7,#fde68a); }
+
+    .card h3 {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 10px;
+      line-height: 1.35;
+    }
+    .card p {
+      font-size: 14px;
+      color: #64748b;
+      line-height: 1.68;
+    }
+
+    /* ══════════════════════════════
+       FOR WHOM
+    ══════════════════════════════ */
+    .for-whom-section { padding: 0 0 64px; }
+
+    .for-whom-card {
+      background: #ffffff;
+      border-radius: 24px;
+      padding: 44px 48px;
+      box-shadow: 0 4px 32px rgba(15,76,129,0.08);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 44px;
+      align-items: start;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .for-whom-card.visible { opacity: 1; transform: translateY(0); }
+
+    .fw-left h2 {
+      font-size: clamp(20px, 3vw, 26px);
+      font-weight: 800;
+      color: var(--text);
+      margin-bottom: 14px;
+      line-height: 1.3;
+    }
+    .fw-left .fw-desc {
+      font-size: 14.5px;
+      color: var(--muted);
+      line-height: 1.75;
+    }
+    .fw-left .fw-desc strong { color: var(--text); font-weight: 600; }
+
+    .q-list { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+
+    .q-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 14px 16px;
+      background: linear-gradient(135deg, #f8faff, #f0fdf8);
+      border-radius: 12px;
+      border-left: 3px solid var(--accent);
+    }
+    .q-icon {
+      width: 22px; height: 22px;
+      background: linear-gradient(135deg, var(--accent), #10b981);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .q-item p {
+      font-size: 13.5px;
+      color: #1e293b;
+      font-weight: 500;
+      line-height: 1.45;
+    }
+
+    /* ══════════════════════════════
+       CTA
+    ══════════════════════════════ */
+    .cta-section { padding: 0 0 72px; }
+
+    .cta-card {
+      background: linear-gradient(135deg, #0f4c81 0%, #0d6b4f 100%);
+      border-radius: 28px;
+      padding: 56px 48px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .cta-card::before {
+      content: '';
+      position: absolute;
+      top: -110px; right: -110px;
+      width: 320px; height: 320px;
+      background: rgba(255,255,255,0.05);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+    .cta-card::after {
+      content: '';
+      position: absolute;
+      bottom: -90px; left: -90px;
+      width: 260px; height: 260px;
+      background: rgba(255,255,255,0.04);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .cta-card h2 {
+      font-size: clamp(22px, 4vw, 34px);
+      font-weight: 800;
+      color: #ffffff;
+      margin-bottom: 12px;
+      position: relative; z-index: 1;
+    }
+    .cta-card > p {
+      color: rgba(255,255,255,0.72);
+      font-size: 16px;
+      margin-bottom: 40px;
+      position: relative; z-index: 1;
+      max-width: 520px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .cta-buttons {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
+      position: relative; z-index: 1;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 17px 32px;
+      border-radius: 14px;
+      font-size: 15.5px;
+      font-weight: 700;
+      text-decoration: none;
+      width: 100%;
+      max-width: 460px;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+      line-height: 1.3;
+      cursor: pointer;
+    }
+    .btn:hover { transform: translateY(-2px); }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #10b981, #059669);
+      color: #ffffff;
+      animation: ctaPulse 2.6s ease-in-out infinite;
+    }
+    @keyframes ctaPulse {
+      0%,100% { box-shadow: 0 4px 20px rgba(16,185,129,0.38); }
+      50%      { box-shadow: 0 4px 44px rgba(16,185,129,0.68), 0 0 0 8px rgba(16,185,129,0.14); }
+    }
+    .btn-primary:hover {
+      animation: none;
+      box-shadow: 0 8px 32px rgba(16,185,129,0.55);
+    }
+
+    .btn-ghost {
+      background: rgba(255,255,255,0.1);
+      color: rgba(255,255,255,0.9);
+      border: 1.5px solid rgba(255,255,255,0.28);
+    }
+    .btn-ghost:hover { background: rgba(255,255,255,0.2); }
+
+    /* ── footer ── */
+    footer {
+      text-align: center;
+      padding: 28px 0 44px;
+      color: #94a3b8;
+      font-size: 13px;
+      position: relative; z-index: 1;
+    }
+
+    /* ══════════════════════════════
+       PREVIEW (spreadsheet mockup)
+    ══════════════════════════════ */
+    .preview-section { padding: 0 0 64px; }
+
+    .browser-frame {
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 16px 60px rgba(15,76,129,0.18);
+      border: 1px solid #e2e8f0;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .browser-frame.visible { opacity: 1; transform: translateY(0); }
+
+    .browser-bar {
+      background: #f1f5f9;
+      padding: 9px 14px;
+      display: flex;
+      align-items: center;
+      border-bottom: 1px solid #e2e8f0;
+      user-select: none;
+    }
+    .browser-dots { display: flex; gap: 5px; margin-right: 10px; flex-shrink: 0; }
+    .dot { width: 10px; height: 10px; border-radius: 50%; }
+    .dot-r { background: #ff5f57; }
+    .dot-y { background: #febc2e; }
+    .dot-g { background: #28c840; }
+    .browser-url {
+      flex: 1;
+      background: #e8edf4;
+      border-radius: 5px;
+      padding: 4px 12px;
+      font-size: 11px;
+      color: #64748b;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+
+    .sheet-mockup {
+      display: grid;
+      grid-template-columns: 1fr 1.55fr;
+      background: white;
+    }
+    .sheet-left { border-right: 2px solid #d1d5db; }
+    .sh-header-main {
+      background: linear-gradient(90deg, #bf4a00, #e07030);
+      color: white;
+      font-weight: 700;
+      padding: 7px 10px;
+      font-size: 10.5px;
+    }
+    .sh-section-hdr {
+      background: #1a5c40;
+      color: white;
+      font-weight: 600;
+      padding: 4px 10px;
+      font-size: 10px;
+    }
+    .sh-row {
+      display: grid;
+      grid-template-columns: 1fr 28px 72px;
+      border-bottom: 1px solid #f1f5f9;
+    }
+    .sh-label {
+      padding: 4px 8px;
+      font-size: 10px;
+      color: #374151;
+      border-right: 1px solid #f1f5f9;
+      line-height: 1.3;
+    }
+    .sh-unit {
+      padding: 4px 4px;
+      font-size: 9px;
+      color: #9ca3af;
+      text-align: center;
+      border-right: 1px solid #f1f5f9;
+    }
+    .sh-val {
+      padding: 4px 8px;
+      font-size: 10px;
+      background: #fef9c3;
+      text-align: right;
+      font-weight: 600;
+      color: #78350f;
+    }
+    .sh-results-title {
+      background: #f8faff;
+      padding: 7px 10px;
+      font-weight: 800;
+      font-size: 12px;
+      color: #0f172a;
+      border-bottom: 1px solid #e2e8f0;
+      text-align: center;
+    }
+    .sh-tbl { width: 100%; border-collapse: collapse; font-size: 9px; }
+    .sh-tbl thead th {
+      background: #1e4e7e;
+      color: white;
+      padding: 5px 5px;
+      text-align: right;
+      font-weight: 600;
+      border-right: 1px solid rgba(255,255,255,0.15);
+      white-space: nowrap;
+    }
+    .sh-tbl thead th:first-child { text-align: left; min-width: 110px; }
+    .sh-tbl tbody td {
+      padding: 3px 5px;
+      border-bottom: 1px solid #f1f5f9;
+      border-right: 1px solid #f1f5f9;
+      text-align: right;
+      color: #374151;
+      white-space: nowrap;
+    }
+    .sh-tbl tbody td:first-child { text-align: left; }
+    .sh-tbl tr.sh-section-row td {
+      background: #f0f4ff;
+      font-weight: 600;
+      color: #1e3a5f;
+      font-size: 9.5px;
+      padding-top: 5px;
+    }
+    .sh-tbl tr.sh-bold td { font-weight: 700; color: #0f172a; }
+    .sh-green { color: #059669; font-weight: 700; }
+    .sh-red   { color: #dc2626; }
+    .sh-pct   { color: #6366f1; }
+    .sh-tbl tbody tr:hover td { background: #f8faff; }
+
+    .sheet-tabs {
+      display: flex;
+      gap: 2px;
+      padding: 5px 10px 0;
+      background: #f8faff;
+      border-top: 1px solid #e2e8f0;
+      overflow-x: auto;
+    }
+    .sheet-tab {
+      padding: 3px 12px;
+      border-radius: 4px 4px 0 0;
+      font-size: 10.5px;
+      font-weight: 500;
+      color: #475569;
+      background: #e8edf4;
+      white-space: nowrap;
+      cursor: default;
+    }
+    .sheet-tab.active {
+      background: white;
+      color: #0f4c81;
+      font-weight: 700;
+      border: 1px solid #e2e8f0;
+      border-bottom: none;
+    }
+
+    /* ══════════════════════════════
+       VIDEO
+    ══════════════════════════════ */
+    .video-section { padding: 0 0 64px; }
+    .video-wrap {
+      position: relative;
+      width: 100%;
+      padding-bottom: 56.25%;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 12px 48px rgba(15,76,129,0.16);
+      background: #0f1b2d;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .video-wrap.visible { opacity: 1; transform: translateY(0); }
+    .video-wrap iframe {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      border: none;
+    }
+
+    /* ══════════════════════════════
+       AUTHORS
+    ══════════════════════════════ */
+    .authors-section { padding: 0 0 64px; }
+    .authors-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-bottom: 24px;
+    }
+    .author-card {
+      background: white;
+      border-radius: 22px;
+      padding: 32px 24px;
+      box-shadow: 0 4px 28px rgba(15,76,129,0.08);
+      text-align: center;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.55s ease, transform 0.55s ease, box-shadow 0.25s ease;
+    }
+    .author-card.visible { opacity: 1; transform: translateY(0); }
+    .author-card.visible:hover {
+      box-shadow: 0 8px 44px rgba(15,76,129,0.14);
+      transform: translateY(-4px);
+    }
+    .author-photo-wrap {
+      width: 110px; height: 110px;
+      border-radius: 50%;
+      margin: 0 auto 18px;
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(135deg, #dbeafe 0%, #a7f3d0 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 3px solid rgba(5,150,105,0.18);
+      box-shadow: 0 4px 20px rgba(15,76,129,0.12);
+    }
+    .author-photo-wrap img {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      object-position: top;
+      z-index: 1;
+    }
+    .author-initials {
+      font-size: 30px;
+      font-weight: 800;
+      color: #0f4c81;
+      line-height: 1;
+    }
+    .author-name {
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--text);
+      margin-bottom: 6px;
+      line-height: 1.2;
+    }
+    .author-name a { color: inherit; text-decoration: none; }
+    .author-name a:hover { color: var(--accent); }
+    .author-tg {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 13px;
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 600;
+      transition: color 0.2s;
+    }
+    .author-tg:hover { color: var(--primary); }
+    .authors-tagline {
+      background: white;
+      border-radius: 20px;
+      padding: 34px 40px;
+      box-shadow: 0 4px 24px rgba(15,76,129,0.07);
+      text-align: center;
+      opacity: 0;
+      transform: translateY(16px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .authors-tagline.visible { opacity: 1; transform: translateY(0); }
+    .authors-tagline p {
+      font-size: 15.5px;
+      color: var(--muted);
+      line-height: 1.8;
+      max-width: 680px;
+      margin: 0 auto;
+    }
+    .authors-tagline strong { color: var(--text); font-weight: 700; }
+
+    /* ══════════════════════════════
+       RESPONSIVE
+    ══════════════════════════════ */
+    @media (max-width: 680px) {
+      .hero            { padding: 52px 0 38px; }
+      .benefits        { padding: 44px 0 32px; }
+      .cards-grid      { grid-template-columns: 1fr; }
+
+      .for-whom-card {
+        grid-template-columns: 1fr;
+        padding: 28px 22px;
+        gap: 26px;
+      }
+      .cta-card        { padding: 38px 22px; }
+      .cta-card > p    { margin-bottom: 30px; }
+
+      /* preview: hide left data panel on mobile, show only results */
+      .sheet-left      { display: none; }
+      .sheet-mockup    { grid-template-columns: 1fr; }
+
+      .authors-grid    { grid-template-columns: 1fr; }
+      .authors-tagline { padding: 24px 20px; }
+      .preview-section, .video-section, .authors-section { padding-bottom: 44px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+
+  <!-- ════════ HERO ════════ -->
+  <section class="hero">
+    <div class="container">
+      <div class="badge">
+        <span class="badge-dot"></span>
+        Бесплатный шаблон · Аутсорс персонала
+      </div>
+      <h1>Финансовая модель<br>аутсорса персонала</h1>
+      <p class="hero-desc">
+        Финмодель для аутсорсера линейного персонала — это не «табличка ради таблички»,
+        а способ заранее <strong>видеть деньги</strong>: где маржа, сколько людей можно вывести,
+        какой проект тянет команду, и когда будет кассовый разрыв.
+      </p>
+    </div>
+  </section>
+
+  <!-- ════════ BENEFITS ════════ -->
+  <section class="benefits">
+    <div class="container">
+      <div class="section-label">Что внутри</div>
+      <h2 class="section-title">4 задачи, которые решает финмодель</h2>
+
+      <div class="cards-grid">
+
+        <!-- 1 -->
+        <div class="card">
+          <div class="card-icon ic-blue">
+            <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+              <rect x="3" y="17" width="5" height="8" rx="2" fill="#3b82f6"/>
+              <rect x="11" y="11" width="5" height="14" rx="2" fill="#3b82f6" opacity=".6"/>
+              <rect x="19.5" y="5" width="5" height="20" rx="2" fill="#3b82f6" opacity=".35"/>
+              <path d="M5.5 20 L12 13.5 L17.5 17 L25.5 7" stroke="#1d4ed8" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+              <circle cx="25.5" cy="7" r="2" fill="#1d4ed8"/>
+            </svg>
+          </div>
+          <h3>Юнит-экономика по объектам и клиентам</h3>
+          <p>Считайте прибыльность каждого проекта отдельно. Видите, какой клиент приносит деньги, а какой работает в ноль — или тянет назад.</p>
+        </div>
+
+        <!-- 2 -->
+        <div class="card">
+          <div class="card-icon ic-green">
+            <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+              <circle cx="9.5" cy="9.5" r="5" fill="#059669"/>
+              <circle cx="19.5" cy="19.5" r="3.8" fill="#059669" opacity=".45"/>
+              <line x1="4" y1="24.5" x2="24.5" y2="4" stroke="#059669" stroke-width="2.5" stroke-linecap="round"/>
+              <line x1="7.5" y1="9.5" x2="11.5" y2="9.5" stroke="white" stroke-width="1.8" stroke-linecap="round"/>
+              <line x1="9.5" y1="7.5" x2="9.5" y2="11.5" stroke="white" stroke-width="1.8" stroke-linecap="round"/>
+              <line x1="17.5" y1="19.5" x2="21.5" y2="19.5" stroke="white" stroke-width="1.8" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <h3>Реальная маржинальность — не «кажется», а по цифрам</h3>
+          <p>Себестоимость, наценка, чистая маржа — всё перед глазами. Больше никаких ощущений: только конкретные проценты и суммы.</p>
+        </div>
+
+        <!-- 3 -->
+        <div class="card">
+          <div class="card-icon ic-purple">
+            <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+              <circle cx="10" cy="8" r="4.2" fill="#7c3aed"/>
+              <circle cx="20.5" cy="8" r="3.3" fill="#7c3aed" opacity=".52"/>
+              <path d="M1.5 25c0-4.6 3.8-8.4 8.5-8.4s8.5 3.8 8.5 8.4" stroke="#7c3aed" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+              <path d="M20.5 13.5c3.2 1 5.5 4 5.5 8.5" stroke="#7c3aed" stroke-width="2" stroke-linecap="round" fill="none" opacity=".52"/>
+            </svg>
+          </div>
+          <h3>Планирование ФОТ и нагрузки на объекты</h3>
+          <p>Рассчитывайте фонд оплаты труда заранее, балансируйте нагрузку между объектами и не допускайте перерасхода бюджета.</p>
+        </div>
+
+        <!-- 4 -->
+        <div class="card">
+          <div class="card-icon ic-amber">
+            <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+              <rect x="3.5" y="5.5" width="21" height="19" rx="4" stroke="#d97706" stroke-width="2" fill="none"/>
+              <line x1="3.5" y1="12" x2="24.5" y2="12" stroke="#d97706" stroke-width="2"/>
+              <line x1="9.5" y1="3" x2="9.5" y2="8" stroke="#d97706" stroke-width="2.5" stroke-linecap="round"/>
+              <line x1="18.5" y1="3" x2="18.5" y2="8" stroke="#d97706" stroke-width="2.5" stroke-linecap="round"/>
+              <path d="M7.5 18.5 Q10 16 12.5 18.5 T17.5 18 T22 16.5" stroke="#d97706" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+            </svg>
+          </div>
+          <h3>Прогноз прибыли и денежного потока</h3>
+          <p>Видите картину на месяц и квартал вперёд: где ожидается кассовый разрыв и что нужно скорректировать прямо сейчас.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ FOR WHOM ════════ -->
+  <section class="for-whom-section">
+    <div class="container">
+      <div class="for-whom-card">
+
+        <div class="fw-left">
+          <h2>Для кого этот инструмент?</h2>
+          <p class="fw-desc">
+            Финмодель — это инструмент планирования и контроля для
+            <strong>собственников и руководителей</strong> аутсорсинговых компаний.<br><br>
+            Это инструмент, который отвечает на ключевые вопросы, каждый день крутящиеся
+            в голове у тех, кто отвечает за деньги в бизнесе.
+          </p>
+        </div>
+
+        <ul class="q-list">
+          <li class="q-item">
+            <span class="q-icon">
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+                <path d="M2 6l3 3 5-5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+            <p>Сколько мы зарабатываем по каждому объекту / клиенту?</p>
+          </li>
+          <li class="q-item">
+            <span class="q-icon">
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+                <path d="M2 6l3 3 5-5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+            <p>Какая маржа реальная, а какая «на словах»?</p>
+          </li>
+          <li class="q-item">
+            <span class="q-icon">
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+                <path d="M2 6l3 3 5-5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+            <p>Сколько сотрудников можно вывести без провала по деньгам?</p>
+          </li>
+          <li class="q-item">
+            <span class="q-icon">
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+                <path d="M2 6l3 3 5-5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+            <p>Где точка безубыточности и какой объём продаж нужен?</p>
+          </li>
+        </ul>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ PREVIEW ════════ -->
+  <section class="preview-section">
+    <div class="container">
+      <div class="section-label">Как выглядит</div>
+      <h2 class="section-title">Превью финансовой модели</h2>
+
+      <div class="browser-frame">
+        <!-- Browser chrome -->
+        <div class="browser-bar">
+          <div class="browser-dots">
+            <span class="dot dot-r"></span>
+            <span class="dot dot-y"></span>
+            <span class="dot dot-g"></span>
+          </div>
+          <span class="browser-url">Google Sheets · Финансовая модель аутсорса персонала</span>
+        </div>
+
+        <!-- Spreadsheet mockup -->
+        <div class="sheet-mockup">
+
+          <!-- LEFT: Input data -->
+          <div class="sheet-left">
+            <div class="sh-header-main">Исходные данные для расчёта (можно менять)</div>
+            <div class="sh-section-hdr">Показатели по доходам</div>
+            <div class="sh-row">
+              <span class="sh-label">Кол-во объектов/договоров в базе</span>
+              <span class="sh-unit">шт</span>
+              <span class="sh-val">5</span>
+            </div>
+            <div class="sh-row">
+              <span class="sh-label">Ср. кол-во часов на 1 клиента в месяц</span>
+              <span class="sh-unit">час</span>
+              <span class="sh-val">11 813</span>
+            </div>
+            <div class="sh-row">
+              <span class="sh-label">Тариф КЛИЕНТА 1 час (БЕЗ НДС)</span>
+              <span class="sh-unit">руб</span>
+              <span class="sh-val">417,45</span>
+            </div>
+            <div class="sh-section-hdr">Прямые расходы (Исполнители)</div>
+            <div class="sh-row">
+              <span class="sh-label">Тариф ИСПОЛНИТЕЛЯ 1 час</span>
+              <span class="sh-unit">руб</span>
+              <span class="sh-val">283,85</span>
+            </div>
+            <div class="sh-row">
+              <span class="sh-label">Комиссия платформы</span>
+              <span class="sh-unit">%</span>
+              <span class="sh-val">1,5%</span>
+            </div>
+            <div class="sh-section-hdr">Прямые расходы по объектам 2</div>
+            <div class="sh-row">
+              <span class="sh-label">ФОТ менеджеров объектов</span>
+              <span class="sh-unit">%</span>
+              <span class="sh-val">4%</span>
+            </div>
+            <div class="sh-row">
+              <span class="sh-label">ФОТ руководителя направления</span>
+              <span class="sh-unit">%</span>
+              <span class="sh-val">6,60%</span>
+            </div>
+            <div class="sh-section-hdr">Косвенные расходы (за мес)</div>
+            <div class="sh-row">
+              <span class="sh-label">Адм. консалтинг, юристы, бухгалтерия</span>
+              <span class="sh-unit">руб</span>
+              <span class="sh-val">20 000</span>
+            </div>
+            <div class="sh-row">
+              <span class="sh-label">Банковское обслуживание</span>
+              <span class="sh-unit">руб</span>
+              <span class="sh-val">5 000</span>
+            </div>
+          </div>
+
+          <!-- RIGHT: Results -->
+          <div class="sheet-right">
+            <div class="sh-results-title">ИТОГИ (планирование)</div>
+            <table class="sh-tbl">
+              <thead>
+                <tr>
+                  <th>Показатель</th>
+                  <th>Квартал 1</th>
+                  <th>Квартал 2</th>
+                  <th>Квартал 3</th>
+                  <th>Квартал 4</th>
+                  <th>ИТОГО 12 мес</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="sh-section-row"><td colspan="6">Доходы и прибыль</td></tr>
+                <tr class="sh-bold">
+                  <td>Выручка (без НДС), руб.</td>
+                  <td>73 970 053</td><td>73 970 053</td><td>73 970 053</td><td>73 970 053</td>
+                  <td class="sh-green">295 880 211</td>
+                </tr>
+                <tr>
+                  <td>Прямые расходы по объектам</td>
+                  <td class="sh-red">−54 309 843</td><td class="sh-red">−54 309 843</td><td class="sh-red">−54 309 843</td><td class="sh-red">−54 309 843</td>
+                  <td class="sh-red">−217 239 373</td>
+                </tr>
+                <tr class="sh-bold">
+                  <td>Маржинальный доход 1</td>
+                  <td>19 660 209</td><td>19 660 209</td><td>19 660 209</td><td>19 660 209</td>
+                  <td class="sh-green">78 640 838</td>
+                </tr>
+                <tr>
+                  <td class="sh-pct">Рентабельность по марже 1</td>
+                  <td class="sh-pct">26,58%</td><td class="sh-pct">26,58%</td><td class="sh-pct">26,58%</td><td class="sh-pct">26,58%</td>
+                  <td class="sh-pct">26,58%</td>
+                </tr>
+                <tr>
+                  <td>Косвенные расходы</td>
+                  <td class="sh-red">−1 575 000</td><td class="sh-red">−1 575 000</td><td class="sh-red">−1 575 000</td><td class="sh-red">−1 575 000</td>
+                  <td class="sh-red">−6 300 000</td>
+                </tr>
+                <tr class="sh-bold">
+                  <td>Операционная прибыль</td>
+                  <td>8 839 633</td><td>8 839 633</td><td>8 839 633</td><td>8 839 633</td>
+                  <td class="sh-green">35 358 533</td>
+                </tr>
+                <tr>
+                  <td class="sh-pct">Рентабельность операц.</td>
+                  <td class="sh-pct">11,95%</td><td class="sh-pct">11,95%</td><td class="sh-pct">11,95%</td><td class="sh-pct">11,95%</td>
+                  <td class="sh-pct">11,95%</td>
+                </tr>
+                <tr class="sh-section-row"><td colspan="6">Итоговые показатели</td></tr>
+                <tr class="sh-bold">
+                  <td>Чистая прибыль, руб.</td>
+                  <td class="sh-green">3 661 730</td><td class="sh-green">3 661 730</td><td class="sh-green">3 661 730</td><td class="sh-green">3 661 730</td>
+                  <td class="sh-green">14 646 918</td>
+                </tr>
+                <tr>
+                  <td class="sh-pct">Рентабельность по чистой прибыли</td>
+                  <td class="sh-pct">4,95%</td><td class="sh-pct">4,95%</td><td class="sh-pct">4,95%</td><td class="sh-pct">4,95%</td>
+                  <td class="sh-pct">4,95%</td>
+                </tr>
+                <tr class="sh-section-row"><td colspan="6">Нагрузка</td></tr>
+                <tr>
+                  <td>Кол-во часов за мес, по всем договорам</td>
+                  <td>177 195</td><td>177 195</td><td>177 195</td><td>177 195</td>
+                  <td>708 780</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+        </div><!-- /sheet-mockup -->
+
+        <!-- Sheet tabs -->
+        <div class="sheet-tabs">
+          <div class="sheet-tab">Инструкция</div>
+          <div class="sheet-tab active">Условия/результаты</div>
+          <div class="sheet-tab">Финмодель</div>
+        </div>
+      </div><!-- /browser-frame -->
+
+    </div>
+  </section>
+
+  <!-- ════════ VIDEO ════════ -->
+  <section class="video-section">
+    <div class="container">
+      <div class="section-label">Обучение</div>
+      <h2 class="section-title">Видео-инструкция: как работать с финмоделью</h2>
+      <div class="video-wrap">
+        <iframe
+          src="https://rutube.ru/play/embed/32550e13867efe6c7e90f05aae112f89/"
+          frameborder="0"
+          allow="clipboard-write; autoplay"
+          webkitAllowFullScreen
+          mozallowfullscreen
+          allowfullscreen
+          loading="lazy">
+        </iframe>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ AUTHORS ════════ -->
+  <section class="authors-section">
+    <div class="container">
+      <div class="section-label">Авторы</div>
+      <h2 class="section-title">Кто создал эту финмодель</h2>
+
+      <div class="authors-grid">
+
+        <!-- Екатерина Яхонтова -->
+        <!-- Чтобы добавить фото: сохраните файл photo-yahontova.jpg в эту же папку -->
+        <div class="author-card">
+          <div class="author-photo-wrap">
+            <img src="photo-yahontova.jpg" alt="Екатерина Яхонтова" onerror="this.style.display='none'">
+            <span class="author-initials">ЕЯ</span>
+          </div>
+          <h3 class="author-name">
+            <a href="https://t.me/yahontova_finance" target="_blank" rel="noopener">Екатерина Яхонтова</a>
+          </h3>
+          <a href="https://t.me/yahontova_finance" class="author-tg" target="_blank" rel="noopener">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
+            </svg>
+            @yahontova_finance
+          </a>
+        </div>
+
+        <!-- Елена Демина -->
+        <!-- Чтобы добавить фото: сохраните файл photo-demina.jpg в эту же папку -->
+        <div class="author-card">
+          <div class="author-photo-wrap">
+            <img src="photo-demina.jpg" alt="Елена Демина" onerror="this.style.display='none'">
+            <span class="author-initials">ЕД</span>
+          </div>
+          <h3 class="author-name">
+            <a href="https://t.me/elenademina_findoctor" target="_blank" rel="noopener">Елена Демина</a>
+          </h3>
+          <a href="https://t.me/elenademina_findoctor" class="author-tg" target="_blank" rel="noopener">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
+            </svg>
+            @elenademina_findoctor
+          </a>
+        </div>
+
+      </div><!-- /authors-grid -->
+
+      <!-- Shared description -->
+      <div class="authors-tagline">
+        <p>
+          Мы специализируемся на <strong>управленческом учёте и финансовых моделях</strong>
+          для бизнеса аутсорса линейного персонала.<br><br>
+          Помогаем собственникам увидеть реальную картину по объектам, персоналу и прибыли,
+          навести прозрачность в цифрах и принимать управленческие решения без догадок и стресса.<br><br>
+          Эта модель создана как удобный инструмент для первичного анализа и честного разговора
+          с бизнесом на языке денег.
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ════════ CTA ════════ -->
+  <section class="cta-section">
+    <div class="container">
+      <div class="cta-card">
+        <h2>Забирайте шаблон бесплатно</h2>
+        <p>Сделайте копию, заполните под свой бизнес — и начните управлять финансами по цифрам, а не на ощущениях</p>
+
+        <div class="cta-buttons">
+
+          <a href="https://t.me/EGDemina_Findoctor/183" class="btn btn-primary" target="_blank" rel="noopener">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
+            </svg>
+            ✅ Забрать шаблон в Telegram-канале
+          </a>
+
+          <a href="https://t.me/m/ynDgYbgNYjhi" class="btn btn-ghost" target="_blank" rel="noopener">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
+            </svg>
+            📩 Заказать финмодель под свой бизнес
+          </a>
+
+          <a href="https://t.me/+p66SHErzkEFmMmUy" class="btn btn-ghost" target="_blank" rel="noopener">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.277-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
+            </svg>
+            💬 Подписаться на Telegram-канал
+          </a>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      Финансы и управленческий учёт для аутсорсинга линейного персонала
+    </div>
+  </footer>
+
+  <script>
+    // ── Scroll-in animation for benefit cards ──
+    const cards = document.querySelectorAll('.card');
+    const cardObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          // reset delay after entrance so hover is instant
+          setTimeout(() => { entry.target.style.transitionDelay = '0s'; }, 650);
+          cardObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+
+    cards.forEach((card, i) => {
+      card.style.transitionDelay = (i * 0.1) + 's';
+      cardObserver.observe(card);
+    });
+
+    // ── Generic fade-in observer ──
+    function fadeInObserve(selector, delay) {
+      const elements = document.querySelectorAll(selector);
+      if (!elements.length) return;
+      const obs = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            obs.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.1 });
+      elements.forEach((el, i) => {
+        if (delay) el.style.transitionDelay = (i * delay) + 's';
+        obs.observe(el);
+      });
+    }
+
+    fadeInObserve('.for-whom-card');
+    fadeInObserve('.browser-frame');
+    fadeInObserve('.video-wrap');
+    fadeInObserve('.author-card', 0.12);
+    fadeInObserve('.authors-tagline');
+  </script>
+
+</body>
+</html>
