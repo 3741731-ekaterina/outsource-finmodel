@@ -114,7 +114,7 @@ export default function Settings() {
             className="input-field"
           />
           <p className="mt-1.5 text-xs text-gray-400">
-            Найдите себя в разделе «Подписчики» кабинета BotHelp и скопируйте числовой ID
+            Это внутренний ID BotHelp (маленькое число: 4, 12, 100...). Найдите себя в разделе «Подписчики» → откройте профиль → скопируйте ID из URL или поля «ID». Не путайте с Telegram ID (9-значное число).
           </p>
         </div>
 

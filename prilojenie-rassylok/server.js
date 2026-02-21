@@ -69,17 +69,17 @@ async function getBotHelpAccessToken() {
 }
 
 // ── Хелпер для BotHelp API ────────────────────────────────────────────────
-async function botHelpRequest(apiPath, method = 'GET', body = null) {
+async function botHelpRequest(apiPath, method = 'GET', body = null, contentType = 'application/json') {
   const token = await getBotHelpAccessToken();
   const options = {
     method,
     headers: {
       'Authorization': `Bearer ${token}`,
-      'Content-Type': 'application/json',
+      'Content-Type': contentType,
     },
     redirect: 'follow',
   };
-  if (body) options.body = JSON.stringify(body);
+  if (body !== null) options.body = JSON.stringify(body);
 
   const res = await fetch(`https://api.bothelp.io${apiPath}`, options);
   let data;
@@ -157,10 +157,12 @@ app.post('/api/bothelp/test', async (req, res) => {
   const text = title ? `*${title}*\n\n${body}` : body;
 
   try {
+    // BotHelp API: Content-Type = application/vnd.api+json, тело = массив объектов
     const result = await botHelpRequest(
       `/v1/subscribers/${testSubscriberId}/messages`,
       'POST',
-      { content: text }
+      [{ content: text }],
+      'application/vnd.api+json'
     );
     res.json({ ok: result.ok, status: result.status, data: result.data });
   } catch (e) {
