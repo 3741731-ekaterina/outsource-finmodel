@@ -1,0 +1,26 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(mkdir -p /Users/ekaterinaahontova/Documents/Project/exspert_po_yy/эксперт-по-оцифровке-бизнеса-pro/public/images)",
+      "Bash(cp \"Для главной страницы.png\" \"эксперт-по-оцифровке-бизнеса-pro/public/images/hero.png\")",
+      "Bash(cp \"Об эксперта.jpeg\" \"эксперт-по-оцифровке-бизнеса-pro/public/images/author.jpg\")",
+      "Bash(cp \"Книга.png\" \"эксперт-по-оцифровке-бизнеса-pro/public/images/book.png\")",
+      "Bash(cp \"кейсы.png\" \"эксперт-по-оцифровке-бизнеса-pro/public/images/cases.png\")",
+      "Bash(./node_modules/.bin/vite build *)",
+      "Bash(./node_modules/.bin/shadcn add *)",
+      "Bash(./node_modules/.bin/vite --port=3001 --host=0.0.0.0)",
+      "Bash(git -C /Users/ekaterinaahontova/Documents/Project/exspert_po_yy/эксперт-по-оцифровке-бизнеса-pro log --oneline -3)",
+      "Bash(echo \"EXIT: $?\")",
+      "Bash(git rm *)",
+      "Bash(echo \"EXIT:$?\")",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" \"https://api.github.com/repos/3741731-ekaterina/ekspert-po-otsifrovke-pro\")",
+      "Bash(wait)",
+      "Bash(gh api *)",
+      "Bash(ls /Users/ekaterinaahontova/Documents/Project/exspert_po_yy/*.jpg /Users/ekaterinaahontova/Documents/Project/exspert_po_yy/*.png)",
+      "Bash(ls /Users/ekaterinaahontova/Documents/Project/exspert_po_yy/*.png)"
+    ],
+    "additionalDirectories": [
+      "/Users/ekaterinaahontova/Documents/Project/exspert_po_yy/эксперт-по-оцифровке-бизнеса-pro/.git"
+    ]
+  }
+}
