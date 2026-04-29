@@ -10,7 +10,6 @@ export default function SpasiboPage() {
     <div className="min-h-screen bg-[#f5f4f0] flex flex-col">
       <header className="bg-[#1a4731] text-white">
         <div className="mx-auto max-w-2xl px-4 py-8 text-center">
-          <p className="text-xs uppercase tracking-widest text-green-300 mb-2">Аутсорс-CFO</p>
           <h1 className="text-2xl font-bold tracking-tight">Екатерина Яхонтова</h1>
         </div>
       </header>
@@ -30,7 +29,15 @@ export default function SpasiboPage() {
             чтобы обсудить детали и назначить время консультации.
           </p>
           <p className="text-sm text-gray-400 mb-8">
-            Если вопрос срочный — напишите напрямую в Telegram
+            Если вопрос срочный — напишите напрямую в{' '}
+            <a
+              href="https://t.me/yahontova_finance"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-[#1a4731] underline underline-offset-2 hover:text-[#2d6a4f]"
+            >
+              Telegram
+            </a>
           </p>
 
           <div className="rounded-xl bg-white p-5 shadow-sm text-left space-y-3 mb-8">
