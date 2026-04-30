@@ -37,7 +37,8 @@ const output = {
   currentAccountingCostPerYear: document.querySelector("#currentAccountingCostPerYear"),
   timeSavingPerMonth: document.querySelector("#timeSavingPerMonth"),
   expenseSavingPerMonth: document.querySelector("#expenseSavingPerMonth"),
-  monthlyTable: document.querySelector("#monthly-table"),
+  monthlyChart: document.querySelector("#monthly-chart"),
+  chartFinalTotal: document.querySelector("#chart-final-total"),
 };
 
 const rubFormatter = new Intl.NumberFormat("ru-RU", {
@@ -111,19 +112,40 @@ function readInput() {
   };
 }
 
-function renderMonthlyRows(rows) {
-  output.monthlyTable.innerHTML = rows
+function renderMonthlyChart(rows) {
+  const maxTotal = Math.max(...rows.map((row) => Math.abs(row.totalSaving)), 1);
+
+  output.monthlyChart.innerHTML = rows
     .map(
-      (row) => `
-        <tr>
-          <td>${row.month}</td>
-          <td>${money(row.timeSaving)}</td>
-          <td>${money(row.expenseSaving)}</td>
-          <td>${money(row.totalSaving)}</td>
-        </tr>
-      `,
+      (row) => {
+        const total = Math.max(Math.abs(row.totalSaving), 0);
+        const time = Math.max(row.timeSaving, 0);
+        const expense = Math.max(row.expenseSaving, 0);
+        const positiveTotal = Math.max(time + expense, 1);
+        const barWidth = `${Math.max((total / maxTotal) * 100, 2)}%`;
+        const timeShare = `${(time / positiveTotal) * 100}%`;
+        const expenseShare = `${(expense / positiveTotal) * 100}%`;
+
+        return `
+          <div class="chart-row">
+            <div class="chart-row__month">${row.month}</div>
+            <div class="chart-row__track" aria-hidden="true">
+              <div class="chart-row__stack" style="--bar-width: ${barWidth}; --time-share: ${timeShare}; --expense-share: ${expenseShare};">
+                <span class="chart-row__time"></span>
+                <span class="chart-row__expense"></span>
+              </div>
+            </div>
+            <div class="chart-row__value">${money(row.totalSaving)}</div>
+          </div>
+        `;
+      },
     )
     .join("");
+}
+
+function renderChartSummary(rows) {
+  const finalMonth = rows.at(-1);
+  output.chartFinalTotal.textContent = finalMonth ? money(finalMonth.totalSaving) : money(0);
 }
 
 function renderWarning(input, result) {
@@ -157,7 +179,8 @@ function render() {
   output.timeSavingPerMonth.textContent = money(result.timeSavingPerMonth);
   output.expenseSavingPerMonth.textContent = money(result.expenseSavingPerMonth);
 
-  renderMonthlyRows(result.monthlyCumulative);
+  renderMonthlyChart(result.monthlyCumulative);
+  renderChartSummary(result.monthlyCumulative);
   renderWarning(input, result);
 }
 

@@ -5,17 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
-      content="Калькулятор стоимости часа собственника и эффекта от внедрения сервиса управленческого учета."
+      content="Калькулятор эффекта от внедрения сервиса управленческого учета."
     />
-    <title>Калькулятор экономии времени и денег</title>
+    <title>Калькулятор эффекта от внедрения сервиса учета</title>
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
     <main class="page-shell">
       <section class="hero" aria-labelledby="page-title">
         <div class="hero__content">
-          <p class="eyebrow">Финтабло</p>
-          <h1 id="page-title">Калькулятор стоимости часа собственника</h1>
+          <p class="eyebrow">Управленческий учет</p>
+          <h1 id="page-title">Калькулятор эффекта от внедрения сервиса учета</h1>
           <p class="hero__lead">
             Оцените, сколько времени и денег можно высвободить после внедрения сервиса управленческого учета.
           </p>
@@ -23,6 +23,25 @@
         <div class="hero__metric" aria-label="Ключевой результат">
           <span>Расчет за год</span>
           <strong id="hero-total">0 ₽</strong>
+        </div>
+      </section>
+
+      <section class="author-panel" aria-label="Автор калькулятора">
+        <img class="author-panel__photo" src="./Екатерина%20Яхонтова.png" alt="Екатерина Яхонтова" />
+        <div class="author-panel__body">
+          <p class="eyebrow">Автор калькулятора</p>
+          <h2>Екатерина Яхонтова</h2>
+          <p>Финансист и эксперт по внедрению учета</p>
+        </div>
+        <div class="social-links" aria-label="Каналы автора">
+          <a href="https://max.ru/u/f9LHodD0cOK4FCCehXDnZVD9DPEf3Pur_Rgmnral_wmHP9O1MFHvQz7C16o" target="_blank" rel="noreferrer">
+            <img src="./Max_logo_2025.png" alt="" />
+            <span>Канал в Max</span>
+          </a>
+          <a href="https://t.me/yahontova_profinance" target="_blank" rel="noreferrer">
+            <img src="./telegram-logo.svg" alt="" />
+            <span>Telegram</span>
+          </a>
         </div>
       </section>
 
@@ -125,29 +144,17 @@
       <section class="monthly-section" aria-labelledby="monthly-title">
         <div class="section-heading">
           <p class="eyebrow">12 месяцев</p>
-          <h2 id="monthly-title">Накопительный эффект</h2>
+          <h2 id="monthly-title">График накопительного эффекта</h2>
         </div>
-        <div class="table-wrap">
-          <table>
-            <thead>
-              <tr>
-                <th>Месяц</th>
-                <th>Экономия времени</th>
-                <th>Экономия расходов</th>
-                <th>Итого</th>
-              </tr>
-            </thead>
-            <tbody id="monthly-table"></tbody>
-          </table>
+        <div class="chart-legend" aria-hidden="true">
+          <span><i class="legend-time"></i> Экономия времени</span>
+          <span><i class="legend-expense"></i> Экономия расходов</span>
         </div>
-      </section>
-
-      <section class="case-strip" aria-label="Кейс">
-        <div>
-          <p class="eyebrow">Кейс</p>
-          <h2>Посмотрите пример внедрения управленческого учета</h2>
+        <div class="chart" id="monthly-chart" aria-label="График накопительного эффекта за 12 месяцев"></div>
+        <div class="chart-summary">
+          <strong id="chart-final-total">0 ₽</strong>
+          <span>расчетный эффект к концу года</span>
         </div>
-        <a href="https://fintablo.ru/case/shipyard" target="_blank" rel="noreferrer">Открыть кейс</a>
       </section>
     </main>
 
