@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Калькулятор стоимости часа собственника и эффекта от внедрения сервиса управленческого учета."
+    />
+    <title>Калькулятор экономии времени и денег</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="page-shell">
+      <section class="hero" aria-labelledby="page-title">
+        <div class="hero__content">
+          <p class="eyebrow">Финтабло</p>
+          <h1 id="page-title">Калькулятор стоимости часа собственника</h1>
+          <p class="hero__lead">
+            Оцените, сколько времени и денег можно высвободить после внедрения сервиса управленческого учета.
+          </p>
+        </div>
+        <div class="hero__metric" aria-label="Ключевой результат">
+          <span>Расчет за год</span>
+          <strong id="hero-total">0 ₽</strong>
+        </div>
+      </section>
+
+      <section class="calculator" aria-label="Калькулятор">
+        <form class="panel inputs" id="calculator-form">
+          <div class="panel__header">
+            <p class="eyebrow">Данные бизнеса</p>
+            <h2>Введите показатели</h2>
+          </div>
+
+          <label class="field">
+            <span>Дивиденды собственника в месяц</span>
+            <input id="monthlyDividends" name="monthlyDividends" type="number" min="0" step="10000" value="500000" />
+          </label>
+
+          <label class="field">
+            <span>Рабочие часы в месяц</span>
+            <input id="workingHoursPerMonth" name="workingHoursPerMonth" type="number" min="1" step="1" value="160" />
+            <small>160 часов: 5-дневная рабочая неделя по 8 часов.</small>
+          </label>
+
+          <label class="field">
+            <span>Часы в месяц на ведение отчетов</span>
+            <input id="reportHoursPerMonth" name="reportHoursPerMonth" type="number" min="0" step="1" value="20" />
+          </label>
+
+          <label class="field">
+            <span>Стоимость сервиса в месяц</span>
+            <input id="serviceCostPerMonth" name="serviceCostPerMonth" type="number" min="0" step="100" value="200" />
+          </label>
+
+          <label class="field">
+            <span>Ежемесячный оборот</span>
+            <input id="monthlyRevenue" name="monthlyRevenue" type="number" min="0" step="100000" value="8000000" />
+          </label>
+
+          <label class="field">
+            <span>Потенциальное сокращение расходов, %</span>
+            <input id="expenseReductionRate" name="expenseReductionRate" type="number" min="0" max="100" step="0.1" value="2" />
+            <small>В таблице использован консервативный сценарий 2%.</small>
+          </label>
+        </form>
+
+        <aside class="panel results" aria-label="Результаты расчета">
+          <div class="panel__header">
+            <p class="eyebrow">Ваш результат</p>
+            <h2>Эффект внедрения</h2>
+          </div>
+
+          <div class="result-grid">
+            <article class="result-card result-card--accent">
+              <span>Стоимость часа</span>
+              <strong id="ownerHourlyRate">0 ₽</strong>
+            </article>
+            <article class="result-card">
+              <span>Экономия на времени в год</span>
+              <strong id="timeSavingPerYear">0 ₽</strong>
+            </article>
+            <article class="result-card">
+              <span>Экономия на расходах в год</span>
+              <strong id="expenseSavingPerYear">0 ₽</strong>
+            </article>
+            <article class="result-card result-card--total">
+              <span>Общий расчетный эффект за год</span>
+              <strong id="totalSavingPerYear">0 ₽</strong>
+            </article>
+          </div>
+
+          <dl class="details">
+            <div>
+              <dt>На отчеты в год</dt>
+              <dd id="reportHoursPerYear">0 ч</dd>
+            </div>
+            <div>
+              <dt>В рабочих днях</dt>
+              <dd id="reportWorkDaysPerYear">0 дн.</dd>
+            </div>
+            <div>
+              <dt>Учет сейчас в месяц</dt>
+              <dd id="currentAccountingCostPerMonth">0 ₽</dd>
+            </div>
+            <div>
+              <dt>Учет сейчас в год</dt>
+              <dd id="currentAccountingCostPerYear">0 ₽</dd>
+            </div>
+            <div>
+              <dt>Экономия на времени в месяц</dt>
+              <dd id="timeSavingPerMonth">0 ₽</dd>
+            </div>
+            <div>
+              <dt>Экономия на расходах в месяц</dt>
+              <dd id="expenseSavingPerMonth">0 ₽</dd>
+            </div>
+          </dl>
+
+          <p class="notice" id="warning" hidden></p>
+        </aside>
+      </section>
+
+      <section class="monthly-section" aria-labelledby="monthly-title">
+        <div class="section-heading">
+          <p class="eyebrow">12 месяцев</p>
+          <h2 id="monthly-title">Накопительный эффект</h2>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Месяц</th>
+                <th>Экономия времени</th>
+                <th>Экономия расходов</th>
+                <th>Итого</th>
+              </tr>
+            </thead>
+            <tbody id="monthly-table"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="case-strip" aria-label="Кейс">
+        <div>
+          <p class="eyebrow">Кейс</p>
+          <h2>Посмотрите пример внедрения управленческого учета</h2>
+        </div>
+        <a href="https://fintablo.ru/case/shipyard" target="_blank" rel="noreferrer">Открыть кейс</a>
+      </section>
+    </main>
+
+    <script src="./script.js"></script>
+  </body>
+</html>
